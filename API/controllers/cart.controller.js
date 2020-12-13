@@ -2,25 +2,43 @@ const  cartItem = require('../models/cartitem.model');
 const mongoose = require('mongoose');
 
 
-exports.add_cart_item =async (req,res,next)=>{
-    try{
-        const cartitem = new cartItem({
-            _id: new mongoose.Types.ObjectId(),
-            quantity:req.body.quantity,
-            name:req.body.name,
-            image:req.body.image,
-            size:req.body.size,
-            price:req.body.price,
+exports.add_cart_item = (req, res, next) => {
+    const cartitem = new cartItem({
+        _id: new mongoose.Types.ObjectId(),
+        quantity:req.body.quantity,
+        name:req.body.name,
+        image:req.body.image,
+        size:req.body.size,
+        price:req.body.price,
+    });
+    
+    cartitem
+        .save()
+        .then(result => {
+            res.status(201).json({
+                message: 'Added to Cart',
+                _id: result._id,
+                AddedtoCart: {
+                    _id: result._id,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/cart/' + result._id
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({ error: err });
         });
-
-        const response = await cartitem.save();
-        res.send(201).json(response);
-    }
-    catch(error){
-        res.status(404);
-        res.send({ error: error });
-    }
 }
+
+
+
+
+
+
+
 exports.get_cartItems = async (req, res, next) => {
     try {
         const posts = await cartItem.find();
