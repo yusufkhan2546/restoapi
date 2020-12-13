@@ -1,0 +1,28 @@
+{
+  "name": "restaurentapi",
+  "version": "1.0.0",
+  "description": "a common restaurent api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusufkhan2546/restaurentapi.git"
+  },
+  "author": "Yusuf Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yusufkhan2546/restaurentapi/issues"
+  },
+  "homepage": "https://github.com/yusufkhan2546/restaurentapi#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.7",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {}
+}
