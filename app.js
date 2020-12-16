@@ -9,12 +9,15 @@ const cors = require('cors');
 const bodyparser = require('body-parser');
 
 const mongoose = require('mongoose');
+var exphbs  = require('express-handlebars');
 
 
 const foodItemRoutes = require('./API/routes/fooditems');
 const userRoutes = require('./API/routes/user');
 const foodtypeRoutes = require('./API/routes/foodtypes');
-const cartRoutes = require('./API/routes/cart')
+const cartRoutes = require('./API/routes/cart');
+const addressRoutes = require('./API/routes/address');
+const ordersRoutes = require('./API/routes/order');
 
 
 mongoose.connect('mongodb+srv://yusufkhan2546:@likh@n@123$@nodetestcluster.qigkd.mongodb.net/NodeTestCluster?retryWrites=true&w=majority',{
@@ -22,16 +25,21 @@ mongoose.connect('mongodb+srv://yusufkhan2546:@likh@n@123$@nodetestcluster.qigkd
     useNewUrlParser: true
 });
 mongoose.Promise = global.Promise;
-
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 app.use(cors());
 
+
 app.use('/foodtypes',foodtypeRoutes);
 app.use('/fooditems', foodItemRoutes);
 app.use('/users',userRoutes);
 app.use('/cart',cartRoutes);
+app.use('/address',addressRoutes);
+app.use('/orders',ordersRoutes);
+app
 
 
 app.use((req,res,next)=>{

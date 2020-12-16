@@ -5,6 +5,11 @@ const mongoose = require('mongoose');
 const jwt      = require('jsonwebtoken');
 const verify_token = require('../middleware/token-verify');
 const key = require('../../nodemon.json');
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
+var path = require('path');
+var viewPath = path.join(__dirname, '/views');
+
 
 //routes handler middlewares
 
@@ -42,6 +47,7 @@ exports.user_signUp = (req,res,next)=>{
                             message:"User Created",
                             contact:'#IAm_developer'
                         })
+                        next();
                     })
                     .catch(err => {
                         console.log(err)
@@ -250,3 +256,44 @@ exports.update_userbyId = (req, res, next) => {
    })
 }
 exports.verify_tokenUser = verify_token;
+exports.mail = (req,res,next) =>{
+    try{
+        const to = req.body.to;
+        const subject = req.body.subject;
+        const text = req.body.text;
+        const html = req.body.html;
+        let transporter = nodemailer.createTransport({
+            service:'gmail',
+            auth:{
+                'user':'patanyusufkhan222@gmail.com',
+                'pass':'@likh@n@123$'
+            }
+        });
+        
+        transporter.use('compile', hbs({
+            viewPath:viewPath,
+            viewEngine:'express-handlebars'
+        }));
+        //send mail with options
+        var mail = {
+           from: 'from@domain.com',
+           to: 'to@domain.com',
+           subject: 'Test',
+           template: 'home',
+           context: {
+               name: 'Name'
+           }
+        }
+        transporter.sendMail(mail);
+         
+    } catch(error){
+           return res.status(401).json({
+               message:"Mail Fail",
+               error:error
+           })
+    }
+
+};
+exports.rendertemplate = (req,res,next)=>{
+    res.render("home");
+}

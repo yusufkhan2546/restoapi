@@ -1,10 +1,13 @@
 const  cartItem = require('../models/cartitem.model');
+const Order = require('../models/order.model');
 const mongoose = require('mongoose');
+
 
 
 exports.add_cart_item = (req, res, next) => {
     const cartitem = new cartItem({
         _id: new mongoose.Types.ObjectId(),
+        user:req.body.user,
         quantity:req.body.quantity,
         name:req.body.name,
         image:req.body.image,
@@ -32,13 +35,6 @@ exports.add_cart_item = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 }
-
-
-
-
-
-
-
 exports.get_cartItems = async (req, res, next) => {
     try {
         const posts = await cartItem.find();
@@ -46,7 +42,7 @@ exports.get_cartItems = async (req, res, next) => {
     }
     catch {
         res.status(404)
-        res.send({ error: "Post doesn't exist!" })
+        res.send({ error: "Post doesn't exist!" });
     }
 }
 exports.delete_cartItem = (req, res, next) => {
@@ -65,3 +61,24 @@ exports.delete_cartItem = (req, res, next) => {
 
         });
 }
+exports.delete_cartItems = (req, res, next) => {
+   try{
+       req.body.items.forEach(element => {
+       cartItem.remove({_id:element._id}).exec()
+       .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            message: '500 error',
+            contact: '#IAm_developer'
+        })
+
+    });
+   });
+   } catch(error){
+console.log(error);
+   }
+}
+
