@@ -297,3 +297,17 @@ exports.mail = (req,res,next) =>{
 exports.rendertemplate = (req,res,next)=>{
     res.render("home");
 }
+exports.getRefferalOfUser = async (req,res,next)=>{
+    const id = req.params.referralid;
+     try {
+            const count = await User.find({refferal:id}).count();
+            res.status(200).json(count);
+     }catch (error){
+        res.status(404)
+        res.send({ error:error });
+     }
+
+
+
+
+}

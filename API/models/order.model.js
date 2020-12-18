@@ -28,7 +28,8 @@ const orderSchema = mongoose.Schema({
         state:{type:String,required:true},
         pin:{type:String,required:true},
         phone:{type:String,required:true},
-    }
+    },
+    status:{type:String,value:'Placed'}
 });
 // const varientSchema = mongoose.Schema({
    

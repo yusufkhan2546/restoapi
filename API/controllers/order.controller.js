@@ -63,3 +63,17 @@ exports.get_orders = async (req,res,next) =>{
         res.send({ error: "Post doesn't exist!" });
     }  
 }
+exports.order_status = async (req,res,next) => {
+    const status = req.body.status;
+    const id = req.params.orderId;
+try {
+      const order = await Order.findByIdAndUpdate(id,{status:status});
+      res.status(200).json({
+          message:"Order Updated"
+      });
+    
+} catch (error) {
+    res.status(404)
+    res.send({ error: error });
+}
+}

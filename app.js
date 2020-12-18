@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 
+
 const morgan = require('morgan');
 
 const cors = require('cors');
@@ -18,6 +19,9 @@ const foodtypeRoutes = require('./API/routes/foodtypes');
 const cartRoutes = require('./API/routes/cart');
 const addressRoutes = require('./API/routes/address');
 const ordersRoutes = require('./API/routes/order');
+const cardRoutes = require('./API/routes/card');
+const refferalRoutes = require('./API/routes/refferal');
+
 
 
 mongoose.connect('mongodb+srv://yusufkhan2546:@likh@n@123$@nodetestcluster.qigkd.mongodb.net/NodeTestCluster?retryWrites=true&w=majority',{
@@ -32,15 +36,14 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 app.use(cors());
 
-
 app.use('/foodtypes',foodtypeRoutes);
 app.use('/fooditems', foodItemRoutes);
 app.use('/users',userRoutes);
 app.use('/cart',cartRoutes);
 app.use('/address',addressRoutes);
 app.use('/orders',ordersRoutes);
-app
-
+app.use('/cards',cardRoutes);
+app.use('/refferal',refferalRoutes)
 
 app.use((req,res,next)=>{
 const error = new Error('Route Not Found');

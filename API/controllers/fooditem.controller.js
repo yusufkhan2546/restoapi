@@ -102,3 +102,30 @@ exports.delete_fooditem = (req, res, next) => {
 
         });
 }
+exports.search_foodItem = async (req,res,next) =>{
+    try{
+        const items = await FoodItem.find({
+            foodname:{
+                $regex:req.params.foodname
+            }
+        });
+        res.status(200).json(items);
+    } catch(error){
+        res.status(404)
+        res.send({ error: error })
+    }
+   
+}
+exports.getFoodItemsByType = async (req,res,next) =>{
+    try{
+        const items = await FoodItem.find({
+            foodtype:{
+                $regex:req.params.foodType
+            }
+        });
+        res.status(200).json(items);
+    } catch(error){
+        res.status(404)
+        res.send({ error: error })
+    }
+}
