@@ -7,7 +7,8 @@ exports.add_order = (req,res,next) =>{
         user:req.body.user,
         amount:req.body.amount,
         items:req.body.items,
-        address:req.body.address
+        address:req.body.address,
+        status:'Placed'
     });
     
     order

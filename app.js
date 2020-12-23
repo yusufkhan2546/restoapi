@@ -21,6 +21,8 @@ const addressRoutes = require('./API/routes/address');
 const ordersRoutes = require('./API/routes/order');
 const cardRoutes = require('./API/routes/card');
 const refferalRoutes = require('./API/routes/refferal');
+const adminRoutes = require('./API/routes/admin');
+const riderRotes = require('./API/routes/rider');
 
 
 
@@ -43,7 +45,9 @@ app.use('/cart',cartRoutes);
 app.use('/address',addressRoutes);
 app.use('/orders',ordersRoutes);
 app.use('/cards',cardRoutes);
-app.use('/refferal',refferalRoutes)
+app.use('/refferal',refferalRoutes);
+app.use('/admin',adminRoutes);
+app.use('/rider',riderRotes);
 
 app.use((req,res,next)=>{
 const error = new Error('Route Not Found');

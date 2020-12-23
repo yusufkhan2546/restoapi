@@ -129,3 +129,39 @@ exports.getFoodItemsByType = async (req,res,next) =>{
         res.send({ error: error })
     }
 }
+exports.update_fooditem = (req, res, next) => {
+    const id = req.params.fooditemId;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+       }
+    FoodItem.updateOne({_id:id},{$set: updateOps })
+   .exec()
+   .then(result=>{
+       res.status(200).json(result);
+   })
+   .catch(err=>{
+       console.log(err);
+       res.status(500).json({
+           error:err
+       })
+   })
+}
+exports.update_foodtype = (req, res, next) => {
+    const id = req.params.foodtypeId;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+       }
+    Foodtype.updateOne({_id:id},{$set: updateOps })
+   .exec()
+   .then(result=>{
+       res.status(200).json(result);
+   })
+   .catch(err=>{
+       console.log(err);
+       res.status(500).json({
+           error:err
+       })
+   })
+}
